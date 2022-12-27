@@ -1,49 +1,74 @@
 from __future__ import annotations  # PEP 585
 
 import datetime
-import json
-import os.path
+import traceback
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
-from ..const import TMDB_PERSONS_ROOT
-from .tmdb import TmdbManager
+if TYPE_CHECKING:
+    from .db import TmdbDb
+    from .tmdb import TmdbManager
 
 
 @dataclass
 class TmdbPerson:
     pid: int
+    data: dict
 
     @classmethod
-    def from_imdb_id(cls, imdb_id: str, tm: TmdbManager) -> TmdbPerson | None:
-        if r := tm.find_person_id_by_imdb_id(imdb_id=imdb_id):
-            return TmdbPerson(pid=r["id"])
-        else:
+    def from_tmdb(cls, pid: int, tm: TmdbManager) -> TmdbPerson | None:
+        try:
+            data = {
+                "retrieved_dt": datetime.datetime.now(
+                    datetime.timezone.utc
+                ).isoformat(),
+                "details": tm.get_person_details(pid=pid),
+                "movie_credits": tm.get_person_movie_credits(pid=pid),
+                "tv_credits": tm.get_person_tv_credits(pid=pid),
+                "external_ids": tm.get_person_external_ids(pid=pid),
+            }
+        except:  # pylint: disable=bare-except
+            traceback.print_exc()  # to stderr
             return None
+        return TmdbPerson(pid=pid, data=data)
 
-    def path(self) -> str:
-        return os.path.join(TMDB_PERSONS_ROOT, "%s.json" % self.pid)
+    @classmethod
+    def from_db(cls, pid: int, db: TmdbDb) -> TmdbPerson | None:
+        return db.load_person(pid=pid)
 
-    def load_data(self, tm: TmdbManager | None = None) -> dict | None:
-        path = self.path()
-        if not os.path.isfile(path):
-            if tm:
-                data = self.fetch_data(tm=tm)
-                with open(path, "w", encoding="utf8") as fh:
-                    json.dump(data, fh, indent=2, ensure_ascii=False)
-                return data
-            else:
-                return None
+    @classmethod
+    def from_db_or_tmdb(
+        cls, pid: int, db: TmdbDb, tm: TmdbManager
+    ) -> TmdbPerson | None:
+        if person := cls.from_db(pid=pid, db=db):
+            return person
         else:
-            with open(path, "r", encoding="utf8") as fh:
-                return json.load(fh)
+            person = cls.from_tmdb(pid=pid, tm=tm)
+            if person:
+                db.save_person(person)
+            return person
 
-    def fetch_data(self, tm: TmdbManager) -> dict:
-        return {
-            "retrieved_dt": datetime.datetime.now(
-                datetime.timezone.utc
-            ).isoformat(),
-            "details": tm.get_person_details(pid=self.pid),
-            "movie_credits": tm.get_person_movie_credits(pid=self.pid),
-            "tv_credits": tm.get_person_tv_credits(pid=self.pid),
-            "external_ids": tm.get_person_external_ids(pid=self.pid),
-        }
+    def __str__(self):
+        s = self.name
+        bdy = self.birthday[:4]
+        if dd := self.deathday:
+            s += f" ({bdy}–{dd[:4]})"
+        else:
+            s += f" (b. {bdy})"
+        return s
+
+    @property
+    def details(self) -> dict:
+        return self.data["details"]
+
+    @property
+    def name(self) -> str:
+        return self.details["name"]
+
+    @property
+    def birthday(self) -> str:
+        return self.details["birthday"]
+
+    @property
+    def deathday(self) -> str:
+        return self.details["deathday"]

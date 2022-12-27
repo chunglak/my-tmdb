@@ -271,20 +271,6 @@ pip install "${PACKAGES[@]}"
 pip install ipykernel
 ipython kernel install --user --name=$venv
 #+end_src
-*** PATH upload-to-pypi
-:PROPERTIES:
-:file-path: "/home/chunglak/projects/my-tmdb/bin/upload-to-pypi"
-:file-path-link: [[file:/home/chunglak/projects/my-tmdb/bin/upload-to-pypi][upload-to-pypi]]
-:END:
-#+call: make-file-path()
-#+begin_src bash :shebang #!/bin/bash
-set -eu
-
-cd $PROJECT_ROOT
-rm -rf dist
-pyproject-build
-twine upload dist/*
-#+end_src
 ** PATH src
 :PROPERTIES:
 :file-path: "/home/chunglak/projects/my-tmdb/src"
@@ -360,6 +346,28 @@ def func():
 
 runf(func)  # pylint: disable=undefined-variable
 ,#+end_src
+#+end_src
+* Projects that upload to PyPI
+** PATH bin
+:PROPERTIES:
+:header-args:bash: :shebang #!/bin/bash
+:file-path: "/home/chunglak/projects/my-tmdb/bin"
+:file-path-link: [[file:/home/chunglak/projects/my-tmdb/bin][bin]]
+:END:
+#+call: make-file-path()
+*** PATH upload-to-pypi
+:PROPERTIES:
+:file-path: "/home/chunglak/projects/my-tmdb/bin/upload-to-pypi"
+:file-path-link: [[file:/home/chunglak/projects/my-tmdb/bin/upload-to-pypi][upload-to-pypi]]
+:END:
+#+call: make-file-path()
+#+begin_src bash :shebang #!/bin/bash
+set -eu
+
+cd $PROJECT_ROOT
+rm -rf dist
+pyproject-build
+twine upload dist/*
 #+end_src
 * Project-specific tangled files
 ** PATH bin
