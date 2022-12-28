@@ -66,3 +66,15 @@ class TmdbManager:
 
     def get_person_external_ids(self, pid: int) -> dict:
         return self.get(f"person/{pid}/external_ids")
+
+    def search_movie(self, query: str, year: int | None = None) -> list[dict]:
+        parms: dict = {"query": query}
+        if year:
+            parms["year"] = year
+        r = self.get("search/movie", parms=parms)
+        return r["results"]
+
+    def search_person(self, query: str) -> list[dict]:
+        parms: dict = {"query": query}
+        r = self.get("search/person", parms=parms)
+        return r["results"]
