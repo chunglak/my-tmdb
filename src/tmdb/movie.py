@@ -124,7 +124,7 @@ class TmdbMovie:
         crew_rec = {
             "director": crew_find(["Director"]),
             "writer": crew_find(["Screenplay", "Writer"]),
-            "composer": crew_find(["Original Music Composer"]),
+            "composer": crew_find(["Original Music Composer","Music"]),
         }
 
         details = self.data["details"]
