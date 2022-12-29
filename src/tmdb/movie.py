@@ -16,7 +16,11 @@ class TmdbMovie:
     data: dict
 
     @classmethod
-    def from_tmdb(cls, mid: int, tm: TmdbManager) -> TmdbMovie | None:
+    def from_tmdb(
+        cls, mid: int, tm: TmdbManager | None = None
+    ) -> TmdbMovie | None:
+        if not tm:
+            tm = TmdbManager()
         try:
             data = {
                 "retrieved_dt": datetime.datetime.now(
@@ -33,16 +37,22 @@ class TmdbMovie:
         return TmdbMovie(mid=mid, data=data)
 
     @classmethod
-    def from_db(cls, mid: int, db: TmdbDb) -> TmdbMovie | None:
+    def from_db(cls, mid: int, db: TmdbDb | None = None) -> TmdbMovie | None:
+        if not db:
+            db = TmdbDb()
         return db.load_movie(mid=mid)
 
     @classmethod
     def from_db_or_tmdb(
-        cls, mid: int, db: TmdbDb, tm: TmdbManager
+        cls, mid: int, db: TmdbDb | None = None, tm: TmdbManager | None = None
     ) -> TmdbMovie | None:
+        if not db:
+            db = TmdbDb()
         if movie := cls.from_db(mid=mid, db=db):
             return movie
         else:
+            if not tm:
+                tm = TmdbManager()
             movie = cls.from_tmdb(mid=mid, tm=tm)
             if movie:
                 db.save_movie(movie)
@@ -71,3 +81,65 @@ class TmdbMovie:
     @property
     def year(self) -> int:
         return int(self.details["release_date"][:4])
+
+    def person_ids(self) -> set[int]:
+        pids = set()
+        cs = self.data["credits"]
+        print(cs)
+        for ps in cs.values():
+            for p in ps:
+                pids.add(p["id"])
+        return pids
+
+    def infos(self) -> dict:
+        def crew_find(job: str):
+            return [
+                {"name": rec["name"], "id": rec["id"]}
+                for rec in crew
+                if rec["job"] == job
+            ]
+
+        cast = self.data["credits"]["cast"]
+        cast_rec = [
+            {
+                "character": rec["character"],
+                "actor": rec["name"],
+                "pid": rec["id"],
+            }
+            for rec in cast
+        ]
+
+        crew = self.data["credits"]["crew"]
+        crew_rec = {
+            "director": crew_find("Director"),
+            "writer": crew_find("Screenplay"),
+            "composer": crew_find("Original Music Composer"),
+        }
+
+        details = self.data["details"]
+        title, otitle = [details[k] for k in ["title", "original_title"]]
+        if otitle == title:
+            otitle = None
+        rez = {
+            "id": self.mid,
+            "title": title,
+            "original_title": otitle,
+            "year": int(details["release_date"][:4]),
+            "runtime": details["runtime"],
+            "original_language": details["original_language"],
+            "languages": [
+                rec["english_name"] for rec in details["spoken_languages"]
+            ],
+            "overview": details["overview"],
+            "genres": [rec["name"] for rec in details["genres"]],
+            "cast": cast_rec,
+            "crew": crew_rec,
+            "countries": [
+                rec["name"] for rec in details["production_countries"]
+            ],
+        }
+        if iid := self.data["external_ids"].get("imdb_id"):
+            rez["imdb_id"] = iid
+        if wid := self.data["external_ids"].get("wikidata_id"):
+            rez["wikidata_id"] = wid
+        return rez
