@@ -148,6 +148,7 @@ class TmdbMovie:
             "countries": [
                 rec["name"] for rec in details["production_countries"]
             ],
+            "rating": details["vote_average"],
         }
         if iid := self.data["external_ids"].get("imdb_id"):
             rez["imdb_id"] = iid

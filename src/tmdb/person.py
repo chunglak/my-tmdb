@@ -82,3 +82,7 @@ class TmdbPerson:
     @property
     def deathday(self) -> str:
         return self.details["deathday"]
+
+    @property
+    def url(self) -> str:
+        return f"https://www.themoviedb.org/person/{self.pid}"
