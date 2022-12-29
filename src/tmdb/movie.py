@@ -141,14 +141,14 @@ class TmdbMovie:
         }
 
         details = self.data["details"]
-        title, otitle = [details[k] for k in ["title", "original_title"]]
-        if otitle == title:
+        otitle: str | None = self.original_title
+        if otitle == self.title:
             otitle = None
         rez = {
             "id": self.mid,
-            "title": title,
+            "title": self.title,
             "original_title": otitle,
-            "year": int(details["release_date"][:4]),
+            "year": self.year,
             "runtime": details["runtime"],
             "original_language": details["original_language"],
             "languages": [
