@@ -87,7 +87,10 @@ class TmdbMovie:
 
     @property
     def year(self) -> int:
-        return int(self.details["release_date"][:4])
+        if rd := self.details["release_date"]:
+            return int(rd[:4])
+        else:
+            return 0
 
     @property
     def url(self) -> str:
@@ -124,7 +127,7 @@ class TmdbMovie:
         crew_rec = {
             "director": crew_find(["Director"]),
             "writer": crew_find(["Screenplay", "Writer"]),
-            "composer": crew_find(["Original Music Composer","Music"]),
+            "composer": crew_find(["Original Music Composer", "Music"]),
         }
 
         details = self.data["details"]
