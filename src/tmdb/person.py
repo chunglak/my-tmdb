@@ -16,7 +16,11 @@ class TmdbPerson:
     data: dict
 
     @classmethod
-    def from_tmdb(cls, pid: int, tm: TmdbManager) -> TmdbPerson | None:
+    def from_tmdb(
+        cls, pid: int, tm: TmdbManager | None = None
+    ) -> TmdbPerson | None:
+        if not tm:
+            tm = TmdbManager()
         try:
             data = {
                 "retrieved_dt": datetime.datetime.now(
@@ -33,16 +37,22 @@ class TmdbPerson:
         return TmdbPerson(pid=pid, data=data)
 
     @classmethod
-    def from_db(cls, pid: int, db: TmdbDb) -> TmdbPerson | None:
+    def from_db(cls, pid: int, db: TmdbDb | None = None) -> TmdbPerson | None:
+        if not db:
+            db = TmdbDb()
         return db.load_person(pid=pid)
 
     @classmethod
     def from_db_or_tmdb(
-        cls, pid: int, db: TmdbDb, tm: TmdbManager
+        cls, pid: int, db: TmdbDb | None = None, tm: TmdbManager | None = None
     ) -> TmdbPerson | None:
+        if not db:
+            db = TmdbDb()
         if person := cls.from_db(pid=pid, db=db):
             return person
         else:
+            if not tm:
+                tm = TmdbManager()
             person = cls.from_tmdb(pid=pid, tm=tm)
             if person:
                 db.save_person(person)
