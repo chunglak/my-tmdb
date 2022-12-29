@@ -19,6 +19,8 @@ class TmdbMovie:
     def from_tmdb(
         cls, mid: int, tm: TmdbManager | None = None
     ) -> TmdbMovie | None:
+        from .tmdb import TmdbManager  # pylint: disable=import-outside-toplevel
+
         if not tm:
             tm = TmdbManager()
         try:
@@ -38,6 +40,8 @@ class TmdbMovie:
 
     @classmethod
     def from_db(cls, mid: int, db: TmdbDb | None = None) -> TmdbMovie | None:
+        from .db import TmdbDb  # pylint: disable=import-outside-toplevel
+
         if not db:
             db = TmdbDb()
         return db.load_movie(mid=mid)
@@ -46,6 +50,9 @@ class TmdbMovie:
     def from_db_or_tmdb(
         cls, mid: int, db: TmdbDb | None = None, tm: TmdbManager | None = None
     ) -> TmdbMovie | None:
+        from .db import TmdbDb  # pylint: disable=import-outside-toplevel
+        from .tmdb import TmdbManager  # pylint: disable=import-outside-toplevel
+
         if not db:
             db = TmdbDb()
         if movie := cls.from_db(mid=mid, db=db):
