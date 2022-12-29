@@ -103,11 +103,11 @@ class TmdbMovie:
         return pids
 
     def infos(self) -> dict:
-        def crew_find(job: str):
+        def crew_find(jobs: list[str]):
             return [
                 {"name": rec["name"], "id": rec["id"]}
                 for rec in crew
-                if rec["job"] == job
+                if rec["job"] in jobs
             ]
 
         cast = self.data["credits"]["cast"]
@@ -122,9 +122,9 @@ class TmdbMovie:
 
         crew = self.data["credits"]["crew"]
         crew_rec = {
-            "director": crew_find("Director"),
-            "writer": crew_find("Screenplay"),
-            "composer": crew_find("Original Music Composer"),
+            "director": crew_find(["Director"]),
+            "writer": crew_find(["Screenplay", "Writer"]),
+            "composer": crew_find(["Original Music Composer"]),
         }
 
         details = self.data["details"]
