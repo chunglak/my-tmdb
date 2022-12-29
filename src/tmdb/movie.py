@@ -82,6 +82,10 @@ class TmdbMovie:
     def year(self) -> int:
         return int(self.details["release_date"][:4])
 
+    @property
+    def url(self) -> str:
+        return f"https://www.themoviedb.org/movie/{self.mid}"
+
     def person_ids(self) -> set[int]:
         pids = set()
         cs = self.data["credits"]
