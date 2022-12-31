@@ -86,10 +86,11 @@ class TmdbPerson:
         return self.details["name"]
 
     @property
-    def birthday(self) -> datetime.date:
-        return datetime.datetime.strptime(
-            self.details["birthday"], "%Y-%m-%d"
-        ).date()
+    def birthday(self) -> datetime.date|None:
+        if bd := self.details.get("birthday"):
+            return datetime.datetime.strptime(bd, "%Y-%m-%d").date()
+        else:
+            return None
 
     @property
     def deathday(self) -> datetime.date | None:
