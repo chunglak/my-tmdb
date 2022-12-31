@@ -93,3 +93,10 @@ class TmdbPerson:
     @property
     def url(self) -> str:
         return f"https://www.themoviedb.org/person/{self.pid}"
+
+    @property
+    def imdb_url(self) -> str | None:
+        if iid := self.details.get("imdb_id"):
+            return f"https://www.imdb.com/name/{iid}"
+        else:
+            return None

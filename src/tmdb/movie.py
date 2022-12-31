@@ -96,6 +96,13 @@ class TmdbMovie:
     def url(self) -> str:
         return f"https://www.themoviedb.org/movie/{self.mid}"
 
+    @property
+    def imdb_url(self) -> str | None:
+        if iid := self.details.get("imdb_id"):
+            return f"https://www.imdb.com/title/{iid}"
+        else:
+            return None
+
     def person_ids(self) -> set[int]:
         pids = set()
         cs = self.data["credits"]
