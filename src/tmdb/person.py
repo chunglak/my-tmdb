@@ -19,6 +19,8 @@ class TmdbPerson:
     def from_tmdb(
         cls, pid: int, tm: TmdbManager | None = None
     ) -> TmdbPerson | None:
+        from .tmdb import TmdbManager  # pylint: disable=import-outside-toplevel
+
         if not tm:
             tm = TmdbManager()
         try:
@@ -38,6 +40,8 @@ class TmdbPerson:
 
     @classmethod
     def from_db(cls, pid: int, db: TmdbDb | None = None) -> TmdbPerson | None:
+        from .db import TmdbDb  # pylint: disable=import-outside-toplevel
+
         if not db:
             db = TmdbDb()
         return db.load_person(pid=pid)
@@ -46,6 +50,9 @@ class TmdbPerson:
     def from_db_or_tmdb(
         cls, pid: int, db: TmdbDb | None = None, tm: TmdbManager | None = None
     ) -> TmdbPerson | None:
+        from .db import TmdbDb  # pylint: disable=import-outside-toplevel
+        from .tmdb import TmdbManager  # pylint: disable=import-outside-toplevel
+
         if not db:
             db = TmdbDb()
         if person := cls.from_db(pid=pid, db=db):

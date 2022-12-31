@@ -117,11 +117,6 @@ class TmdbMovie:
                     rez.append({"name": rec["name"], "id": pid})
                     pids.append(pid)
             return rez
-            # return [
-            #     {"name": rec["name"], "id": rec["id"]}
-            #     for rec in crew
-            #     if rec["job"] in jobs
-            # ]
 
         cast = self.data["credits"]["cast"]
         cast_rec = [
@@ -136,7 +131,7 @@ class TmdbMovie:
         crew = self.data["credits"]["crew"]
         crew_rec = {
             "director": crew_find(["Director"]),
-            "writer": crew_find(["Screenplay", "Writer"]),
+            "writer": crew_find(["Screenplay", "Writer", "Novel"]),
             "composer": crew_find(["Original Music Composer", "Music"]),
         }
 
