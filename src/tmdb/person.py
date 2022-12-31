@@ -69,12 +69,12 @@ class TmdbPerson:
 
     def __str__(self):
         s = self.name
-        bd = self.birthday
-        if dd := self.deathday:
-            age = relativedelta(dd, bd).years
-            s += f" ({bd.year}–{dd.year}|{age})"
-        else:
-            s += f" (b. {bd.year})"
+        if bd := self.birthday:
+            if dd := self.deathday:
+                age = relativedelta(dd, bd).years
+                s += f" ({bd.year}–{dd.year}|{age})"
+            else:
+                s += f" (b. {bd.year})"
         return s
 
     @property
