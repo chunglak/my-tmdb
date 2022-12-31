@@ -5,6 +5,8 @@ import traceback
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+from dateutil.relativedelta import relativedelta
+
 if TYPE_CHECKING:
     from .db import TmdbDb
     from .tmdb import TmdbManager
@@ -67,9 +69,10 @@ class TmdbPerson:
 
     def __str__(self):
         s = self.name
-        bdy = self.birthday[:4]
+        bdy = self.birthday.year
         if dd := self.deathday:
-            s += f" ({bdy}–{dd[:4]})"
+            age = relativedelta(dd, bdy).years
+            s += f" ({bdy}–{dd.year}|{age})"
         else:
             s += f" (b. {bdy})"
         return s
@@ -83,12 +86,17 @@ class TmdbPerson:
         return self.details["name"]
 
     @property
-    def birthday(self) -> str:
-        return self.details["birthday"]
+    def birthday(self) -> datetime.date:
+        return datetime.datetime.strptime(
+            self.details["birthday"], "%Y-%m-%d"
+        ).date()
 
     @property
-    def deathday(self) -> str:
-        return self.details["deathday"]
+    def deathday(self) -> datetime.date | None:
+        if dd := self.details.get("deathday"):
+            return datetime.datetime.strptime(dd, "%Y-%m-%d").date()
+        else:
+            return None
 
     @property
     def url(self) -> str:
@@ -100,3 +108,7 @@ class TmdbPerson:
             return f"https://www.imdb.com/name/{iid}"
         else:
             return None
+
+    @property
+    def is_dead(self) -> bool:
+        return bool(self.deathday)

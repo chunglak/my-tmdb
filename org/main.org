@@ -68,10 +68,12 @@ GPL-3.0-or-later
 #+name: project-dependencies
 #+begin_src conf
 requests
+python-dateutil
 #+end_src
 ** Dev dependencies
 #+name: project-dependencies-dev
 #+begin_src conf
+types-python-dateutil
 types-requests
 black # Formatter
 mypy # typing linter
