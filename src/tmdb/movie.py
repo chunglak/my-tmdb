@@ -106,10 +106,10 @@ class TmdbMovie:
     def person_ids(self) -> set[int]:
         pids = set()
         cs = self.data["credits"]
-        print(cs)
-        for ps in cs.values():
-            for p in ps:
-                pids.add(p["id"])
+        for k in ["cast", "crew"]:
+            for ps in cs[k]:
+                for p in ps:
+                    pids.add(p["id"])
         return pids
 
     def infos(self) -> dict:

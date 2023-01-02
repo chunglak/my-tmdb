@@ -1,6 +1,7 @@
 from __future__ import annotations  # PEP 585
 
 import datetime
+import logging
 import traceback
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
@@ -38,7 +39,9 @@ class TmdbPerson:
         except:  # pylint: disable=bare-except
             traceback.print_exc()  # to stderr
             return None
-        return TmdbPerson(pid=pid, data=data)
+        p = TmdbPerson(pid=pid, data=data)
+        logging.info("Fetched %s from TMDB", p)
+        return p
 
     @classmethod
     def from_db(cls, pid: int, db: TmdbDb | None = None) -> TmdbPerson | None:
@@ -86,7 +89,7 @@ class TmdbPerson:
         return self.details["name"]
 
     @property
-    def birthday(self) -> datetime.date|None:
+    def birthday(self) -> datetime.date | None:
         if bd := self.details.get("birthday"):
             return datetime.datetime.strptime(bd, "%Y-%m-%d").date()
         else:

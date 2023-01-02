@@ -56,6 +56,11 @@ class TmdbDb:
             else:
                 return None
 
+    def all_movie_ids(self) -> list[tuple[int, str]]:
+        with sqlite3.connect(self.db_fn) as conn:
+            r = conn.execute("select id,data from movies")
+            return r.fetchall()
+
     def save_person(self, person: TmdbPerson) -> int:
         with sqlite3.connect(self.db_fn) as conn:
             r = conn.execute(
