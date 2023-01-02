@@ -5,12 +5,9 @@ import urllib.parse
 import requests
 
 from .api_key import get_api_key
+from .errors import TmdbNotFoundError
 
 TIMEOUT = 5
-
-
-class TmdbNotFoundError(Exception):
-    pass
 
 
 class TmdbManager:

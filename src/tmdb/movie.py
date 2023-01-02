@@ -1,13 +1,14 @@
 from __future__ import annotations  # PEP 585
 
 import datetime
-import traceback
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .db import TmdbDb
     from .tmdb import TmdbManager
+
+from .errors import TmdbNotFoundError
 
 
 @dataclass
@@ -33,8 +34,7 @@ class TmdbMovie:
                 "external_ids": tm.get_movie_external_ids(mid=mid),
                 "keywords": tm.get_movie_keywords(mid=mid),
             }
-        except:  # pylint: disable=bare-except
-            traceback.print_exc()  # to stderr
+        except TmdbNotFoundError:
             return None
         return TmdbMovie(mid=mid, data=data)
 

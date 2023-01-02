@@ -1,0 +1,2 @@
+class TmdbNotFoundError(Exception):
+    pass
