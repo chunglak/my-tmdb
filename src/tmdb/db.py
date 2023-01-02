@@ -43,7 +43,7 @@ class TmdbDb:
                 "insert or replace into movies(id,data) values (?,?)",
                 (movie.mid, json.dumps(movie.data)),
             )
-            logging.info("Saved movie [%s] to db", movie)
+            logging.info("Saved movie <<%s>> to db", movie)
             return r.rowcount
 
     def load_movie(self, mid: int) -> TmdbMovie | None:
@@ -62,7 +62,7 @@ class TmdbDb:
                 "insert or replace into persons(id,data) values (?,?)",
                 (person.pid, json.dumps(person.data)),
             )
-            logging.info("Saved person [%s] to db", person)
+            logging.info("Saved person <<%s>> to db", person)
             return r.rowcount
 
     def load_person(self, pid: int) -> TmdbPerson | None:
@@ -74,3 +74,8 @@ class TmdbDb:
                 return TmdbPerson(pid=pid, data=json.loads(r[0]))
             else:
                 return None
+
+    def all_person_ids(self) -> list[tuple[int, str]]:
+        with sqlite3.connect(self.db_fn) as conn:
+            r = conn.execute("select id,data from persons")
+            return r.fetchall()
