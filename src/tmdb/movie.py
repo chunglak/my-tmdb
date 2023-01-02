@@ -103,6 +103,30 @@ class TmdbMovie:
         else:
             return None
 
+    @property
+    def tags(self) -> list[str]:
+        tags = self.genres(as_tags=True)
+        if r := self.rating(as_tag=True):
+            tags.append(r)  # type:ignore
+        return tags
+
+    def genres(self, as_tags: bool = False) -> list[str]:
+        if genres := self.details.get("genres"):
+            gs = [rec["name"] for rec in genres]
+            if as_tags:
+                gs = [t.replace("-", "_").lower() for t in gs]
+                gs = [t.replace(" ", "_") for t in gs]
+            return gs
+        else:
+            return []
+
+    def rating(self, as_tag: bool = False) -> float | str | None:
+        r = self.details.get("vote_average")
+        if r:
+            return f"tmdb{int(r*10)}" if as_tag else r
+        else:
+            return None
+
     def person_ids(self) -> dict[int, set[str]]:
         dic: dict = {}
         cs = self.data["credits"]
@@ -156,13 +180,13 @@ class TmdbMovie:
                 rec["english_name"] for rec in details["spoken_languages"]
             ],
             "overview": details["overview"],
-            "genres": [rec["name"] for rec in details["genres"]],
+            "genres": self.genres,
             "cast": cast_rec,
             "crew": crew_rec,
             "countries": [
                 rec["name"] for rec in details["production_countries"]
             ],
-            "rating": details["vote_average"],
+            "rating": self.rating,
         }
         if iid := self.data["external_ids"].get("imdb_id"):
             rez["imdb_id"] = iid
