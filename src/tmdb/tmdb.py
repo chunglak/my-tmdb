@@ -24,7 +24,7 @@ class TmdbManager:
         if r.ok:
             return r.json()
         else:
-            raise Exception(f"Error: {r.reason} ({r.status_code})")
+            raise Exception(f"Error: {r.reason} ({r.status_code}) for {url}")
 
     def find_id_by_imdb_id(self, imdb_id: str) -> dict:
         return self.get(f"find/{imdb_id}", parms={"external_source": "imdb_id"})
