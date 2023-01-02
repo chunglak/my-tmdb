@@ -103,13 +103,13 @@ class TmdbMovie:
         else:
             return None
 
-    def person_ids(self) -> set[int]:
-        pids = set()
+    def person_ids(self) -> dict[int, set[str]]:
+        dic: dict = {}
         cs = self.data["credits"]
         for k in ["cast", "crew"]:
             for rec in cs[k]:
-                pids.add(rec["id"])
-        return pids
+                dic.setdefault(rec["id"], set()).add(rec["name"])
+        return dic
 
     def infos(self) -> dict:
         def crew_find(jobs: list[str]):

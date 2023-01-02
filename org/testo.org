@@ -1300,6 +1300,23 @@ runf(func)  # pylint: disable=undefined-variable
 :  'retrieved_dt': '2022-12-29T16:04:07.965782+00:00'}
 : Task finished in 0.03s
 
+** Number of movies in DB
+#+begin_src jupyter-python :async yes
+def func():
+    # pylint: disable=import-outside-toplevel
+    from tmdb.db import TmdbDb
+
+    db=TmdbDb()
+    print(len(db.all_movie_ids()))
+
+
+runf(func)  # pylint: disable=undefined-variable
+#+end_src
+
+#+RESULTS:
+: 67570
+: Task finished in 1.88s
+
 ** Get from db or tm
 #+begin_src jupyter-python :async yes
 def func():
@@ -10385,6 +10402,23 @@ runf(func)  # pylint: disable=undefined-variable
 : ------------------------------
 : Task finished in 0.43s
 
+** Number of persons in DB
+#+begin_src jupyter-python :async yes
+def func():
+    # pylint: disable=import-outside-toplevel
+    from tmdb.db import TmdbDb
+
+    db=TmdbDb()
+    print(len(db.all_person_ids()))
+
+
+runf(func)  # pylint: disable=undefined-variable
+#+end_src
+
+#+RESULTS:
+: 2331
+: Task finished in 0.53s
+
 ** Persons file
 #+begin_src jupyter-python :async yes
 def func():
@@ -10400,7 +10434,37 @@ runf(func)  # pylint: disable=undefined-variable
 #+end_src
 
 #+RESULTS:
-: Task finished in 1.06s
+:RESULTS:
+: 67558
+# [goto error]
+: [1;31m---------------------------------------------------------------------------[0m
+: [1;31mRuntimeError[0m                              Traceback (most recent call last)
+: Cell [1;32mIn[14], line 10[0m
+: [0;32m      6[0m     fn [38;5;241m=[39m os[38;5;241m.[39mpath[38;5;241m.[39mexpanduser([38;5;124m"[39m[38;5;124m~/var/tmdb_persons_id_file.txt[39m[38;5;124m"[39m)
+: [0;32m      7[0m     make_tmdb_persons_id_file(fn)
+: [1;32m---> 10[0m [43mrunf[49m[43m([49m[43mfunc[49m[43m)[49m  [38;5;66;03m# pylint: disable=undefined-variable[39;00m
+: 
+: Cell [1;32mIn[2], line 22[0m, in [0;36mrunf[1;34m(func)[0m
+: [0;32m     20[0m [38;5;28;01mdef[39;00m [38;5;21mrunf[39m(func):
+: [0;32m     21[0m     t0 [38;5;241m=[39m time[38;5;241m.[39mtime()
+: [1;32m---> 22[0m     r [38;5;241m=[39m [43mfunc[49m[43m([49m[43m)[49m
+: [0;32m     23[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mTask finished in [39m[38;5;132;01m{[39;00mtime[38;5;241m.[39mtime()[38;5;241m-[39mt0[38;5;132;01m:[39;00m[38;5;124m.2f[39m[38;5;132;01m}[39;00m[38;5;124ms[39m[38;5;124m"[39m)
+: [0;32m     24[0m     [38;5;28;01mreturn[39;00m r
+: 
+: Cell [1;32mIn[14], line 7[0m, in [0;36mfunc[1;34m()[0m
+: [0;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtmdb[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpersons_id_file[39;00m [38;5;28;01mimport[39;00m make_tmdb_persons_id_file
+: [0;32m      6[0m fn [38;5;241m=[39m os[38;5;241m.[39mpath[38;5;241m.[39mexpanduser([38;5;124m"[39m[38;5;124m~/var/tmdb_persons_id_file.txt[39m[38;5;124m"[39m)
+: [1;32m----> 7[0m [43mmake_tmdb_persons_id_file[49m[43m([49m[43mfn[49m[43m)[49m
+: 
+: File [1;32m~/projects/my-tmdb/src/tmdb/persons_id_file.py:18[0m, in [0;36mmake_tmdb_persons_id_file[1;34m(fn)[0m
+: [0;32m     16[0m ms [38;5;241m=[39m db[38;5;241m.[39mall_movie_ids()
+: [0;32m     17[0m [38;5;28mprint[39m([38;5;28mlen[39m(ms))
+: [1;32m---> 18[0m [38;5;28;01mraise[39;00m
+: [0;32m     19[0m pids: [38;5;28mset[39m [38;5;241m=[39m [38;5;28mset[39m()
+: [0;32m     20[0m [38;5;28;01mfor[39;00m m [38;5;129;01min[39;00m ms:
+: 
+: [1;31mRuntimeError[0m: No active exception to reraise
+:END:
 
 * Search movie
 #+begin_src jupyter-python :async yes
