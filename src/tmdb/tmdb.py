@@ -9,6 +9,10 @@ from .api_key import get_api_key
 TIMEOUT = 5
 
 
+class TmdbNotFoundError(Exception):
+    pass
+
+
 class TmdbManager:
     def __init__(self, key_file: str | None = None) -> None:
         self.api_key = get_api_key(key_file=key_file)
@@ -24,7 +28,9 @@ class TmdbManager:
         if r.ok:
             return r.json()
         else:
-            raise Exception(f"Error: {r.reason} ({r.status_code}) for {url}")
+            raise TmdbNotFoundError(
+                f"Error: {r.reason} ({r.status_code}) for {url}"
+            )
 
     def find_id_by_imdb_id(self, imdb_id: str) -> dict:
         return self.get(f"find/{imdb_id}", parms={"external_source": "imdb_id"})
