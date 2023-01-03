@@ -180,13 +180,13 @@ class TmdbMovie:
                 rec["english_name"] for rec in details["spoken_languages"]
             ],
             "overview": details["overview"],
-            "genres": self.genres,
+            "genres": self.genres(),
             "cast": cast_rec,
             "crew": crew_rec,
             "countries": [
                 rec["name"] for rec in details["production_countries"]
             ],
-            "rating": self.rating,
+            "rating": self.rating(),
         }
         if iid := self.data["external_ids"].get("imdb_id"):
             rez["imdb_id"] = iid

@@ -34,6 +34,22 @@ class TmdbDb:
                 )
                 """
             )
+            conn.execute(
+                """
+                create table imdbmovies(
+                id           text primary key unique,
+                data         text
+                )
+                """
+            )
+            conn.execute(
+                """
+                create table imdbpersons(
+                id           text primary key unique,
+                data         text
+                )
+                """
+            )
         logging.info("Created database file %s", self.db_fn)
         return True
 
@@ -84,3 +100,23 @@ class TmdbDb:
         with sqlite3.connect(self.db_fn) as conn:
             r = conn.execute("select id,data from persons")
             return r.fetchall()
+
+    # def one_off_add_imdb_tables(self):
+    #     with sqlite3.connect(self.db_fn) as conn:
+    #         conn.execute(
+    #             """
+    #             create table imdbmovies(
+    #             id           text primary key unique,
+    #             data         text
+    #             )
+    #             """
+    #         )
+    #         conn.execute(
+    #             """
+    #             create table imdbpersons(
+    #             id           text primary key unique,
+    #             data         text
+    #             )
+    #             """
+    #         )
+    #     return True

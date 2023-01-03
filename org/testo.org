@@ -10511,7 +10511,63 @@ def func():
 
 runf(func)  # pylint: disable=undefined-variable
 #+end_src
+* DB
+** One-off add imdb tables
+#+begin_src jupyter-python :async yes
+def func():
+    # pylint: disable=import-outside-toplevel
+    from tmdb.db import TmdbDb
 
+    db=TmdbDb()
+    db.one_off_add_imdb_tables()
+
+runf(func)  # pylint: disable=undefined-variable
+#+end_src
+
+#+RESULTS:
+:RESULTS:
+# [goto error]
+: [1;31m---------------------------------------------------------------------------[0m
+: [1;31mOperationalError[0m                          Traceback (most recent call last)
+: Cell [1;32mIn[6], line 8[0m
+: [0;32m      5[0m     db[38;5;241m=[39mTmdbDb()
+: [0;32m      6[0m     db[38;5;241m.[39mone_off_add_imdb_tables()
+: [1;32m----> 8[0m [43mrunf[49m[43m([49m[43mfunc[49m[43m)[49m  [38;5;66;03m# pylint: disable=undefined-variable[39;00m
+: 
+: Cell [1;32mIn[4], line 22[0m, in [0;36mrunf[1;34m(func)[0m
+: [0;32m     20[0m [38;5;28;01mdef[39;00m [38;5;21mrunf[39m(func):
+: [0;32m     21[0m     t0 [38;5;241m=[39m time[38;5;241m.[39mtime()
+: [1;32m---> 22[0m     r [38;5;241m=[39m [43mfunc[49m[43m([49m[43m)[49m
+: [0;32m     23[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mTask finished in [39m[38;5;132;01m{[39;00mtime[38;5;241m.[39mtime()[38;5;241m-[39mt0[38;5;132;01m:[39;00m[38;5;124m.2f[39m[38;5;132;01m}[39;00m[38;5;124ms[39m[38;5;124m"[39m)
+: [0;32m     24[0m     [38;5;28;01mreturn[39;00m r
+: 
+: Cell [1;32mIn[6], line 6[0m, in [0;36mfunc[1;34m()[0m
+: [0;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtmdb[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdb[39;00m [38;5;28;01mimport[39;00m TmdbDb
+: [0;32m      5[0m db[38;5;241m=[39mTmdbDb()
+: [1;32m----> 6[0m [43mdb[49m[38;5;241;43m.[39;49m[43mone_off_add_imdb_tables[49m[43m([49m[43m)[49m
+: 
+: File [1;32m~/projects/my-tmdb/src/tmdb/db.py:106[0m, in [0;36mTmdbDb.one_off_add_imdb_tables[1;34m(self)[0m
+: [0;32m    104[0m [38;5;28;01mdef[39;00m [38;5;21mone_off_add_imdb_tables[39m([38;5;28mself[39m):
+: [0;32m    105[0m     [38;5;28;01mwith[39;00m sqlite3[38;5;241m.[39mconnect([38;5;28mself[39m[38;5;241m.[39mdb_fn) [38;5;28;01mas[39;00m conn:
+: [1;32m--> 106[0m         [43mconn[49m[38;5;241;43m.[39;49m[43mexecute[49m[43m([49m
+: [0;32m    107[0m [43m            [49m[38;5;124;43;03m"""[39;49;00m
+: [0;32m    108[0m [38;5;124;43;03m            create table imdbmovies([39;49;00m
+: [0;32m    109[0m [38;5;124;43;03m            id           text primary key unique,[39;49;00m
+: [0;32m    110[0m [38;5;124;43;03m            data         text[39;49;00m
+: [0;32m    111[0m [38;5;124;43;03m            )[39;49;00m
+: [0;32m    112[0m [38;5;124;43;03m            """[39;49;00m
+: [0;32m    113[0m [43m        [49m[43m)[49m
+: [0;32m    114[0m         conn[38;5;241m.[39mexecute(
+: [0;32m    115[0m             [38;5;124;03m"""[39;00m
+: [0;32m    116[0m [38;5;124;03m            create table imdbpersons([39;00m
+: [1;32m   (...)[0m
+: [0;32m    120[0m [38;5;124;03m            """[39;00m
+: [0;32m    121[0m         )
+: [0;32m    122[0m     [38;5;28;01mreturn[39;00m [38;5;28;01mTrue[39;00m
+: 
+: [1;31mOperationalError[0m: table imdbmovies already exists
+:END:
+* IMDB
 * Func
 #+begin_src jupyter-python :async yes
 def func():
