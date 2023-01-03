@@ -104,10 +104,19 @@ class TmdbMovie:
             return None
 
     @property
-    def tags(self) -> list[str]:
+    def tags(self) -> set[str]:
         tags = self.genres(as_tags=True)
+        tags.append("tmdb")
         if r := self.rating(as_tag=True):
             tags.append(r)  # type:ignore
+        return set(tags)
+
+    def remove_tags(self, tags: set[str]) -> set[str]:
+        for tag in list(tags):
+            if tag.startswith("g@"):
+                tags.remove(tag)
+            elif tag.startswith("tmdb"):
+                tags.remove(tag)
         return tags
 
     def genres(self, as_tags: bool = False) -> list[str]:
