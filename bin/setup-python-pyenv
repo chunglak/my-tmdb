@@ -26,6 +26,7 @@ done
 
 # Install dependencies
 PACKAGES=(
+  types-python-dateutil
   types-requests
   black # Formatter
   mypy # typing linter
@@ -33,6 +34,8 @@ PACKAGES=(
   twine # to publish to pypi
   pytest # testing framework
   requests
+  python-dateutil
+  cinemagoer
 )
 pip install --upgrade pip
 pip install wheel

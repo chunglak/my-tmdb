@@ -69,6 +69,7 @@ GPL-3.0-or-later
 #+begin_src conf
 requests
 python-dateutil
+cinemagoer
 #+end_src
 ** Dev dependencies
 #+name: project-dependencies-dev

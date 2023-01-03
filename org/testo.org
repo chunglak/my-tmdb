@@ -10568,6 +10568,230 @@ runf(func)  # pylint: disable=undefined-variable
 : [1;31mOperationalError[0m: table imdbmovies already exists
 :END:
 * IMDB
+** my imdb
+#+begin_src jupyter-python :async yes
+def func():
+    # pylint: disable=import-outside-toplevel
+    from tmdb.my_imdb import ImdbManager
+
+    mid="tt0499549"
+    im=ImdbManager()
+    m=im.get_movie(mid)
+
+
+runf(func)  # pylint: disable=undefined-variable
+#+end_src
+
+#+RESULTS:
+:RESULTS:
+: [autoreload of tmdb.my_imdb failed: Traceback (most recent call last):
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/IPython/extensions/autoreload.py", line 261, in check
+:     superreload(m, reload, self.old_objects)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/IPython/extensions/autoreload.py", line 459, in superreload
+:     module = reload(module)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/importlib/__init__.py", line 169, in reload
+:     _bootstrap._exec(spec, module)
+:   File "<frozen importlib._bootstrap>", line 619, in _exec
+:   File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+:   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+:   File "/home/chunglak/projects/my-tmdb/src/tmdb/my_imdb.py", line 5, in <module>
+:     from imdb import Cinemagoer, ImdbDataAccessError  # type:ignore
+: ImportError: cannot import name 'ImdbDataAccessError' from 'imdb' (/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/__init__.py)
+: ]
+: 2023-01-03 10:47:35,634 CRITICAL [imdbpy] /home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/_exceptions.py:32: IMDbDataAccessError exception raised; args: ({'errcode': None, 'errmsg': 'None', 'url': 'https://www.imdb.com/title/tt499549000/reference', 'proxy': '', 'exception type': 'IOError', 'original exception': <HTTPError 404: ''>},); kwds: {}
+: Traceback (most recent call last):
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 233, in retrieve_unicode
+:     response = uopener.open(url)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 525, in open
+:     response = meth(req, response)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 634, in http_response
+:     response = self.parent.error(
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 563, in error
+:     return self._call_chain(*args)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 496, in _call_chain
+:     result = func(*args)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 643, in http_error_default
+:     raise HTTPError(req.full_url, code, msg, hdrs, fp)
+: urllib.error.HTTPError: HTTP Error 404: 
+: 2023-01-03 10:47:35,634-_exceptions[__init__:32]
+: CRITICAL-IMDbDataAccessError exception raised; args: ({'errcode': None, 'errmsg': 'None', 'url': 'https://www.imdb.com/title/tt499549000/reference', 'proxy': '', 'exception type': 'IOError', 'original exception': <HTTPError 404: ''>},); kwds: {}
+: Traceback (most recent call last):
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 233, in retrieve_unicode
+:     response = uopener.open(url)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 525, in open
+:     response = meth(req, response)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 634, in http_response
+:     response = self.parent.error(
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 563, in error
+:     return self._call_chain(*args)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 496, in _call_chain
+:     result = func(*args)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 643, in http_error_default
+:     raise HTTPError(req.full_url, code, msg, hdrs, fp)
+: urllib.error.HTTPError: HTTP Error 404: 
+: 2023-01-03 10:47:35,636 CRITICAL [imdbpy] /home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/__init__.py:850: caught an exception retrieving or parsing "main" info set for mopID "499549000" (accessSystem: http)
+: Traceback (most recent call last):
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 233, in retrieve_unicode
+:     response = uopener.open(url)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 525, in open
+:     response = meth(req, response)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 634, in http_response
+:     response = self.parent.error(
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 563, in error
+:     return self._call_chain(*args)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 496, in _call_chain
+:     result = func(*args)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 643, in http_error_default
+:     raise HTTPError(req.full_url, code, msg, hdrs, fp)
+: urllib.error.HTTPError: HTTP Error 404: 
+: 
+: During handling of the above exception, another exception occurred:
+: 
+: Traceback (most recent call last):
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/__init__.py", line 848, in update
+:     ret = method(mopID)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 481, in get_movie_main
+:     cont = self._retrieve(self.urls['movie_main'] % movieID + 'reference')
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 392, in _retrieve
+:     ret = self.urlOpener.retrieve_unicode(url, size=size)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 261, in retrieve_unicode
+:     raise IMDbDataAccessError(
+: imdb._exceptions.IMDbDataAccessError: {'errcode': None, 'errmsg': 'None', 'url': 'https://www.imdb.com/title/tt499549000/reference', 'proxy': '', 'exception type': 'IOError', 'original exception': <HTTPError 404: ''>}
+: 2023-01-03 10:47:35,636-__init__[update:850]
+: CRITICAL-caught an exception retrieving or parsing "main" info set for mopID "499549000" (accessSystem: http)
+: Traceback (most recent call last):
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 233, in retrieve_unicode
+:     response = uopener.open(url)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 525, in open
+:     response = meth(req, response)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 634, in http_response
+:     response = self.parent.error(
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 563, in error
+:     return self._call_chain(*args)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 496, in _call_chain
+:     result = func(*args)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py", line 643, in http_error_default
+:     raise HTTPError(req.full_url, code, msg, hdrs, fp)
+: urllib.error.HTTPError: HTTP Error 404: 
+: 
+: During handling of the above exception, another exception occurred:
+: 
+: Traceback (most recent call last):
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/__init__.py", line 848, in update
+:     ret = method(mopID)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 481, in get_movie_main
+:     cont = self._retrieve(self.urls['movie_main'] % movieID + 'reference')
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 392, in _retrieve
+:     ret = self.urlOpener.retrieve_unicode(url, size=size)
+:   File "/home/chunglak/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py", line 261, in retrieve_unicode
+:     raise IMDbDataAccessError(
+: imdb._exceptions.IMDbDataAccessError: {'errcode': None, 'errmsg': 'None', 'url': 'https://www.imdb.com/title/tt499549000/reference', 'proxy': '', 'exception type': 'IOError', 'original exception': <HTTPError 404: ''>}
+# [goto error]
+: [1;31m---------------------------------------------------------------------------[0m
+: [1;31mHTTPError[0m                                 Traceback (most recent call last)
+: File [1;32m~/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py:233[0m, in [0;36mIMDbURLopener.retrieve_unicode[1;34m(self, url, size)[0m
+: [0;32m    232[0m uopener[38;5;241m.[39maddheaders [38;5;241m=[39m [38;5;28mlist[39m([38;5;28mself[39m[38;5;241m.[39maddheaders)
+: [1;32m--> 233[0m response [38;5;241m=[39m [43muopener[49m[38;5;241;43m.[39;49m[43mopen[49m[43m([49m[43murl[49m[43m)[49m
+: [0;32m    234[0m content [38;5;241m=[39m response[38;5;241m.[39mread()
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py:525[0m, in [0;36mOpenerDirector.open[1;34m(self, fullurl, data, timeout)[0m
+: [0;32m    524[0m     meth [38;5;241m=[39m [38;5;28mgetattr[39m(processor, meth_name)
+: [1;32m--> 525[0m     response [38;5;241m=[39m [43mmeth[49m[43m([49m[43mreq[49m[43m,[49m[43m [49m[43mresponse[49m[43m)[49m
+: [0;32m    527[0m [38;5;28;01mreturn[39;00m response
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py:634[0m, in [0;36mHTTPErrorProcessor.http_response[1;34m(self, request, response)[0m
+: [0;32m    633[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m ([38;5;241m200[39m [38;5;241m<[39m[38;5;241m=[39m code [38;5;241m<[39m [38;5;241m300[39m):
+: [1;32m--> 634[0m     response [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mparent[49m[38;5;241;43m.[39;49m[43merror[49m[43m([49m
+: [0;32m    635[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mhttp[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mrequest[49m[43m,[49m[43m [49m[43mresponse[49m[43m,[49m[43m [49m[43mcode[49m[43m,[49m[43m [49m[43mmsg[49m[43m,[49m[43m [49m[43mhdrs[49m[43m)[49m
+: [0;32m    637[0m [38;5;28;01mreturn[39;00m response
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py:563[0m, in [0;36mOpenerDirector.error[1;34m(self, proto, *args)[0m
+: [0;32m    562[0m args [38;5;241m=[39m ([38;5;28mdict[39m, [38;5;124m'[39m[38;5;124mdefault[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mhttp_error_default[39m[38;5;124m'[39m) [38;5;241m+[39m orig_args
+: [1;32m--> 563[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_call_chain[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m)[49m
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py:496[0m, in [0;36mOpenerDirector._call_chain[1;34m(self, chain, kind, meth_name, *args)[0m
+: [0;32m    495[0m func [38;5;241m=[39m [38;5;28mgetattr[39m(handler, meth_name)
+: [1;32m--> 496[0m result [38;5;241m=[39m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m)[49m
+: [0;32m    497[0m [38;5;28;01mif[39;00m result [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/lib/python3.10/urllib/request.py:643[0m, in [0;36mHTTPDefaultErrorHandler.http_error_default[1;34m(self, req, fp, code, msg, hdrs)[0m
+: [0;32m    642[0m [38;5;28;01mdef[39;00m [38;5;21mhttp_error_default[39m([38;5;28mself[39m, req, fp, code, msg, hdrs):
+: [1;32m--> 643[0m     [38;5;28;01mraise[39;00m HTTPError(req[38;5;241m.[39mfull_url, code, msg, hdrs, fp)
+: 
+: [1;31mHTTPError[0m: HTTP Error 404: 
+: 
+: During handling of the above exception, another exception occurred:
+: 
+: [1;31mIMDbDataAccessError[0m                       Traceback (most recent call last)
+: Cell [1;32mIn[11], line 10[0m
+: [0;32m      6[0m     im[38;5;241m=[39mImdbManager()
+: [0;32m      7[0m     m[38;5;241m=[39mim[38;5;241m.[39mget_movie(mid)
+: [1;32m---> 10[0m [43mrunf[49m[43m([49m[43mfunc[49m[43m)[49m  [38;5;66;03m# pylint: disable=undefined-variable[39;00m
+: 
+: Cell [1;32mIn[4], line 22[0m, in [0;36mrunf[1;34m(func)[0m
+: [0;32m     20[0m [38;5;28;01mdef[39;00m [38;5;21mrunf[39m(func):
+: [0;32m     21[0m     t0 [38;5;241m=[39m time[38;5;241m.[39mtime()
+: [1;32m---> 22[0m     r [38;5;241m=[39m [43mfunc[49m[43m([49m[43m)[49m
+: [0;32m     23[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mTask finished in [39m[38;5;132;01m{[39;00mtime[38;5;241m.[39mtime()[38;5;241m-[39mt0[38;5;132;01m:[39;00m[38;5;124m.2f[39m[38;5;132;01m}[39;00m[38;5;124ms[39m[38;5;124m"[39m)
+: [0;32m     24[0m     [38;5;28;01mreturn[39;00m r
+: 
+: Cell [1;32mIn[11], line 7[0m, in [0;36mfunc[1;34m()[0m
+: [0;32m      5[0m mid[38;5;241m=[39m[38;5;124m"[39m[38;5;124mtt0499549000[39m[38;5;124m"[39m
+: [0;32m      6[0m im[38;5;241m=[39mImdbManager()
+: [1;32m----> 7[0m m[38;5;241m=[39m[43mim[49m[38;5;241;43m.[39;49m[43mget_movie[49m[43m([49m[43mmid[49m[43m)[49m
+: 
+: File [1;32m~/projects/my-tmdb/src/tmdb/my_imdb.py:16[0m, in [0;36mImdbManager.get_movie[1;34m(self, mid)[0m
+: [0;32m     14[0m     logging[38;5;241m.[39merror([38;5;124m'[39m[38;5;124mMovie IDs should start with [39m[38;5;124m"[39m[38;5;124mtt[39m[38;5;124m"[39m[38;5;124m'[39m)
+: [0;32m     15[0m     [38;5;28;01mreturn[39;00m [38;5;28;01mNone[39;00m
+: [1;32m---> 16[0m movie [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mia[49m[38;5;241;43m.[39;49m[43mget_movie[49m[43m([49m[43mmid[49m[43m[[49m[38;5;241;43m2[39;49m[43m:[49m[43m][49m[43m)[49m
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/__init__.py:429[0m, in [0;36mIMDbBase.get_movie[1;34m(self, movieID, info, modFunct)[0m
+: [0;32m    427[0m [38;5;28;01mif[39;00m modFunct [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+: [0;32m    428[0m     movie[38;5;241m.[39mset_mod_funct(modFunct)
+: [1;32m--> 429[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mupdate[49m[43m([49m[43mmovie[49m[43m,[49m[43m [49m[43minfo[49m[43m)[49m
+: [0;32m    430[0m [38;5;28;01mreturn[39;00m movie
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/__init__.py:848[0m, in [0;36mIMDbBase.update[1;34m(self, mop, info, override)[0m
+: [0;32m    846[0m     method [38;5;241m=[39m [38;5;28;01mlambda[39;00m [38;5;241m*[39mx: {}
+: [0;32m    847[0m [38;5;28;01mtry[39;00m:
+: [1;32m--> 848[0m     ret [38;5;241m=[39m [43mmethod[49m[43m([49m[43mmopID[49m[43m)[49m
+: [0;32m    849[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m:
+: [0;32m    850[0m     _imdb_logger[38;5;241m.[39mcritical(
+: [0;32m    851[0m         [38;5;124m'[39m[38;5;124mcaught an exception retrieving or parsing [39m[38;5;124m"[39m[38;5;132;01m%s[39;00m[38;5;124m"[39m[38;5;124m info set[39m[38;5;124m'[39m
+: [0;32m    852[0m         [38;5;124m'[39m[38;5;124m for mopID [39m[38;5;124m"[39m[38;5;132;01m%s[39;00m[38;5;124m"[39m[38;5;124m (accessSystem: [39m[38;5;132;01m%s[39;00m[38;5;124m)[39m[38;5;124m'[39m,
+: [0;32m    853[0m         i, mopID, mop[38;5;241m.[39maccessSystem, exc_info[38;5;241m=[39m[38;5;28;01mTrue[39;00m
+: [0;32m    854[0m     )
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py:481[0m, in [0;36mIMDbHTTPAccessSystem.get_movie_main[1;34m(self, movieID)[0m
+: [0;32m    480[0m [38;5;28;01mdef[39;00m [38;5;21mget_movie_main[39m([38;5;28mself[39m, movieID):
+: [1;32m--> 481[0m     cont [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_retrieve[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43murls[49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mmovie_main[39;49m[38;5;124;43m'[39;49m[43m][49m[43m [49m[38;5;241;43m%[39;49m[43m [49m[43mmovieID[49m[43m [49m[38;5;241;43m+[39;49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mreference[39;49m[38;5;124;43m'[39;49m[43m)[49m
+: [0;32m    482[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39mmProxy[38;5;241m.[39mmovie_parser[38;5;241m.[39mparse(cont, mdparse[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39m_mdparse)
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py:392[0m, in [0;36mIMDbHTTPAccessSystem._retrieve[1;34m(self, url, size, _noCookies)[0m
+: [0;32m    390[0m [38;5;124;03m"""Retrieve the given URL."""[39;00m
+: [0;32m    391[0m [38;5;28mself[39m[38;5;241m.[39m_http_logger[38;5;241m.[39mdebug([38;5;124m'[39m[38;5;124mfetching url [39m[38;5;132;01m%s[39;00m[38;5;124m (size: [39m[38;5;132;01m%d[39;00m[38;5;124m)[39m[38;5;124m'[39m, url, size)
+: [1;32m--> 392[0m ret [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43murlOpener[49m[38;5;241;43m.[39;49m[43mretrieve_unicode[49m[43m([49m[43murl[49m[43m,[49m[43m [49m[43msize[49m[38;5;241;43m=[39;49m[43msize[49m[43m)[49m
+: [0;32m    393[0m [38;5;28;01mif[39;00m PY2 [38;5;129;01mand[39;00m [38;5;28misinstance[39m(ret, [38;5;28mstr[39m):
+: [0;32m    394[0m     ret [38;5;241m=[39m ret[38;5;241m.[39mdecode([38;5;124m'[39m[38;5;124mutf-8[39m[38;5;124m'[39m)
+: 
+: File [1;32m~/.pyenv/versions/3.10.8/envs/my-tmdb/lib/python3.10/site-packages/imdb/parser/http/__init__.py:261[0m, in [0;36mIMDbURLopener.retrieve_unicode[1;34m(self, url, size)[0m
+: [0;32m    258[0m     [38;5;28;01mif[39;00m size [38;5;241m!=[39m [38;5;241m-[39m[38;5;241m1[39m:
+: [0;32m    259[0m         [38;5;66;03m# Ensure that the Range header is removed.[39;00m
+: [0;32m    260[0m         [38;5;28mself[39m[38;5;241m.[39mdel_header([38;5;124m'[39m[38;5;124mRange[39m[38;5;124m'[39m)
+: [1;32m--> 261[0m     [38;5;28;01mraise[39;00m IMDbDataAccessError(
+: [0;32m    262[0m         {[38;5;124m'[39m[38;5;124merrcode[39m[38;5;124m'[39m: e[38;5;241m.[39merrno,
+: [0;32m    263[0m          [38;5;124m'[39m[38;5;124merrmsg[39m[38;5;124m'[39m: [38;5;28mstr[39m(e[38;5;241m.[39mstrerror),
+: [0;32m    264[0m          [38;5;124m'[39m[38;5;124murl[39m[38;5;124m'[39m: url,
+: [0;32m    265[0m          [38;5;124m'[39m[38;5;124mproxy[39m[38;5;124m'[39m: [38;5;28mself[39m[38;5;241m.[39mget_proxy(),
+: [0;32m    266[0m          [38;5;124m'[39m[38;5;124mexception type[39m[38;5;124m'[39m: [38;5;124m'[39m[38;5;124mIOError[39m[38;5;124m'[39m,
+: [0;32m    267[0m          [38;5;124m'[39m[38;5;124moriginal exception[39m[38;5;124m'[39m: e}
+: [0;32m    268[0m     )
+: [0;32m    269[0m [38;5;28;01mif[39;00m encode [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+: [0;32m    270[0m     encode [38;5;241m=[39m [38;5;124m'[39m[38;5;124mutf8[39m[38;5;124m'[39m
+: 
+: [1;31mIMDbDataAccessError[0m: {'errcode': None, 'errmsg': 'None', 'url': 'https://www.imdb.com/title/tt499549000/reference', 'proxy': '', 'exception type': 'IOError', 'original exception': <HTTPError 404: ''>}
+:END:
+
 * Func
 #+begin_src jupyter-python :async yes
 def func():
