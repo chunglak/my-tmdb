@@ -106,9 +106,10 @@ class TmdbMovie:
     @property
     def tags(self) -> set[str]:
         tags = self.genres(as_tags=True)
-        tags.append("tmdb")
         if r := self.rating(as_tag=True):
             tags.append(r)  # type:ignore
+        else:
+            tags.append("tmdb")
         return set(tags)
 
     def remove_tags(self, tags: set[str]) -> set[str]:
