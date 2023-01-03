@@ -112,7 +112,7 @@ class TmdbMovie:
 
     def genres(self, as_tags: bool = False) -> list[str]:
         if genres := self.details.get("genres"):
-            gs = [rec["name"] for rec in genres]
+            gs = ["g@" + rec["name"] for rec in genres]
             if as_tags:
                 gs = [t.replace("-", "_").lower() for t in gs]
                 gs = [t.replace(" ", "_") for t in gs]
